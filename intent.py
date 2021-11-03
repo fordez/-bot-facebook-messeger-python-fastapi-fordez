@@ -1,12 +1,12 @@
 from schemas import SchemaRequest
+from action import send_message
 from fastapi import APIRouter
-from fastapi import FastAPI, Request, Response
+from fastapi import Request, Response
 import requests
-from google.cloud import dialogflow_v2beta1 as dialogflow
 
 
 verify_token = "bot-fordez"
-page_access_token = ""
+page_access_token = "EAAGy5yDAkIoBAMGmQJiisZA92nm7SsakDinigipBWd52Y0A3kWWjEsnVr1G29RvKALz2HR6d2ONicWSni5ZAFOy8Fafelu4UOOg3rmJe291hOWKASRvW482yLiH40MhIcooqYWFcJwJ7SkqBJ8noZAuatZCn1YQkmDbvZAU7xgwt9sXbECKEx"
 
 
 api = APIRouter()
@@ -21,15 +21,16 @@ async def verify(request: Request):
 
 
 @api.post("/webhook")
-def webhook(data: SchemaRequest):
-    dta = data.entry[0]
-    messaging = list(
-        map(lambda messaging: messaging['messaging'], data.entry))
-    senderId = list(
-        map(lambda senderId: senderId['sender']['id'], messaging[0]))
-    message = list(
-        map(lambda message: message['message']['text'], messaging[0]))
-    print(senderId[0])
-    print(message[0])
+async def webhook(data: SchemaRequest):
 
-    return Response("ok", status_code=200)
+    messaging = data.entry[0]['messaging']
+    senderId = messaging[0]['sender']['id']
+    if messaging[0].get('message'):
+        intent = messaging[0]['message']['text']
+    else:
+        intent = messaging[0]['postback']['payload']
+
+    print(senderId)
+    print(intent)
+    await send_message(page_access_token, senderId, intent)
+    return Response(status_code=200)
