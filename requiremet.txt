@@ -1,0 +1,5 @@
+uvicorn
+FastAPI
+httpx
+firebase_admin
+torch

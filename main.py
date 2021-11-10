@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from intent import api
+from bot.intent import api
 
 
 bot = FastAPI()
