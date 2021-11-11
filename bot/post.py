@@ -1,7 +1,7 @@
 from typing import Any
-import httpx
+import httpx, requests
 
-access_token = "EAAGy5yDAkIoBANeBCTqamKyhdkgZCVZBtrAuN8LU6s42SjerpkmTCNJzZChCFVGuPrmDZBvVvHKELZC7jDAYfCHpmMtRnaBvO36JFLDhKfstbiHOCBFyMsuyVJc4gBVSeskCUYFhZCApubpMEVaPEgGmCs953o6pMdbN3pEditN00YcPLjVcea"
+access_token = "EAAGy5yDAkIoBAJPgAkeGYSCKZChoN708kdRGUlejrs5EgZBUINZAZABZCQZC1mNwjNRuFFII2IU5rkPSZA3UjAP9WhJWzuhJbrslUS4xvzEsq0F7DYVvXARbMNMqEYDRJdOY1CINYCXSR2JzeZCqsdZBflCdjWlCTkHi2YVBZAXtq922zvTaOkL4uA"
 
 
 async def post(
@@ -20,3 +20,11 @@ async def post(
         },
     )
     response.raise_for_status()
+
+
+def getUser(senderId: str):
+    response = requests.get(
+        f"https://graph.facebook.com/{senderId}?fields=first_name,last_name&access_token={access_token}"
+    )
+    user = response.json()
+    return user

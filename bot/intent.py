@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Request, Response, responses
 from pydantic import BaseModel
 from typing import List
-from bot.post import post
+from bot.post import getUser, post
 from bot.action import action
 
 
@@ -23,9 +23,10 @@ class SchemaRequest(BaseModel):
 
 
 @api.post("/webhook")
-async def webhook(data: SchemaRequest):
-    messaging = data.entry[0]["messaging"]
+async def webhook(message: SchemaRequest):
+    messaging = message.entry[0]["messaging"]
     senderId = messaging[0]["sender"]["id"]
+
     await post(senderId, message="sender_action", payload="typing_on")
 
     if messaging[0].get("message"):

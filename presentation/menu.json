@@ -1,0 +1,36 @@
+{
+  "persistent_menu": [
+    {
+      "call_to_actions": [
+        {
+          "payload": "ORDER",
+          "title": "🛵 Pedido",
+          "type": "postback"
+        },
+        {
+          "payload": "MENU",
+          "title": "🍔 Menu",
+          "type": "postback"
+        },
+        {
+          "payload": "PROMOTION",
+          "title": "🔖 Promoción",
+          "type": "postback"
+        },
+        {
+          "payload": "DIRECTION",
+          "title": "⛳ Dirección",
+          "type": "postback"
+        },
+        {
+          "title": "👤 Contacto",
+          "type": "web_url",
+          "url": "https://api.whatsapp.com/send?phone=3234497863&text=Deseo%20contactarme%20con%20una%20persona",
+          "webview_height_ratio": "full"
+        }
+      ],
+      "composer_input_disabled": false,
+      "locale": "default"
+    }
+  ]
+}
